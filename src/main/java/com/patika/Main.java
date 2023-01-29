@@ -12,7 +12,12 @@ public class Main {
     public static void main(String[] args) {
 
 
-        Customer customer = new Customer(1,"Kerem", "Metin", LocalDate.now(), "Food Business");
+        ArrayList[] customers = new ArrayList[100];
+        Boolean SystemControl = true;
+
+        while (SystemControl){
+            System.out.println("Patika Fatura Sistemine Hoşgeldiniz....");
+        }
 
 
 

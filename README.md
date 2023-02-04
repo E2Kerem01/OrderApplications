@@ -7,7 +7,7 @@
 * Sisteme eklemeler yapabilirsiniz.
 * Main method üzerinde çalışması yeterlidir. 
 * SOLID prensiplerine uygun olarak yazmaya çalışınız. 
-# #Ödev Adımları
+## Ödev Adımları
 * Listeleme işlemleri stream kullanılarak yapılmalı.
 * Maven projesi oluşturun.
 * Maven komutlarını çalıştırıp, çıktıyı ekleyin

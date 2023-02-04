@@ -12,12 +12,10 @@ public class Customer {
 
 
     private int id;
-
     private String firstName;
-    private String lastName;
     private LocalDate registrationDate;
     private String industry;
-    private List<Invoice> invoices;
+
 
     public Integer getId() {
         return id;
@@ -35,13 +33,6 @@ public class Customer {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public LocalDate getRegistrationDate() {
         return registrationDate;
@@ -55,25 +46,17 @@ public class Customer {
         return industry;
     }
 
-    public List<Invoice> getInvoices() {
-        return invoices;
-    }
-
-    public void setInvoices(List<Invoice> invoices) {
-        this.invoices = invoices;
-    }
-
     public void setIndustry(String industry) {
         this.industry = industry;
     }
 
-    public Customer(int id, String firstName, String lastName, LocalDate registrationDate, String industry) {
+    public Customer(int id,String firstName,  String industry, LocalDate registrationDate) {
         this.id = id;
         this.firstName = firstName;
-        this.lastName = lastName;
         this.registrationDate = registrationDate;
         this.industry = industry;
-        this.invoices = new ArrayList<>(invoices);
     }
+
+
 
 }

@@ -1,40 +1,35 @@
 package com.patika;
 
 import java.time.LocalDate;
-import java.util.Date;
+
+
 
 public class Invoice {
-    private LocalDate invoiceDate;
-    private double amount;
-    private Order order;
+    private final int invoiceNumber;
+    private final double amount;
+    private final LocalDate date;
+    private final Order order;
 
-    public Invoice(LocalDate invoiceDate, double amount, Order order) {
-        this.invoiceDate = invoiceDate;
+    public Invoice(int invoiceNumber, double amount, LocalDate date, Order order) {
+        this.invoiceNumber = invoiceNumber;
         this.amount = amount;
+        this.date = date;
         this.order = order;
     }
 
-    public LocalDate getInvoiceDate() {
-        return invoiceDate;
-    }
-
-    public void setInvoiceDate(LocalDate invoiceDate) {
-        this.invoiceDate = invoiceDate;
+    public int getInvoiceNumber() {
+        return invoiceNumber;
     }
 
     public double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public LocalDate getDate() {
+        return date;
     }
 
     public Order getOrder() {
         return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 }

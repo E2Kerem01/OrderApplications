@@ -1,18 +1,19 @@
 package com.patika;
 
 import java.time.LocalDate;
-
+import java.util.List;
 
 
 public class Invoice {
     private final int invoiceNumber;
-    private final double amount;
+    private final int amount;
     private final LocalDate date;
     private final Order order;
+    private Customer customer;
 
-    public Invoice(int invoiceNumber, double amount, LocalDate date, Order order) {
+    public Invoice(int invoiceNumber, int amount, LocalDate date, Order order) {
         this.invoiceNumber = invoiceNumber;
-        this.amount = amount;
+        this.amount =  amount;
         this.date = date;
         this.order = order;
     }
@@ -21,7 +22,7 @@ public class Invoice {
         return invoiceNumber;
     }
 
-    public double getAmount() {
+    public int getAmount() {
         return amount;
     }
 
@@ -32,4 +33,13 @@ public class Invoice {
     public Order getOrder() {
         return order;
     }
+
+    public void getAvarageAmount(List<Invoice> invoices){
+        double average = invoices.stream()
+                .filter(invoice -> invoice.getAmount() > 1500)
+                .mapToDouble(Invoice::getAmount)
+                .average()
+                .orElse(0.0);
+    }
+
 }

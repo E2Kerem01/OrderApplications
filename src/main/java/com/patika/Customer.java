@@ -3,9 +3,7 @@ package com.patika;
 
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
 
 
 public class Customer {
@@ -15,10 +13,19 @@ public class Customer {
     private String firstName;
     private LocalDate registrationDate;
     private String industry;
+    private Invoice invoice;
 
 
     public Integer getId() {
         return id;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
     }
 
     public void setId(int id) {

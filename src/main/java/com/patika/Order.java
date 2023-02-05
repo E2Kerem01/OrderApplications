@@ -13,7 +13,7 @@ final public class Order {
     private Customer customer;
     private LocalDate orderDate;
 
-    public Order(String productName, int quantity, double price, Customer customer, LocalDate orderDate) {
+    public Order(String productName, int quantity, int price, Customer customer, LocalDate orderDate) {
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;

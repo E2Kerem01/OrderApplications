@@ -19,13 +19,17 @@ public class Main {
 
         Scanner scan = new Scanner(System.in);
         List<Customer> customers = new ArrayList<>();
+        List<Order> orders = new ArrayList<>();
         List<Invoice> invoices = new ArrayList<>();
         Boolean SystemControl = true;
         int tradeNumber = 1;
+        int totalAmount = 0;
+
+        System.out.println("Welcome to the Patika Order System...." + "\n");
 
         while (SystemControl){                                    // Uygulamayı başlatır ve işlem seçimlerine göre süreci yönetir.
 
-            System.out.println("Welcome to the Patika Order System....");
+
             System.out.println("Please Choose One Of The Following Options : ");
 
             System.out.println(                                    // İşlem seçim alanı
@@ -49,7 +53,7 @@ public class Main {
             System.out.println("-----------------------------");
             System.out.println("*****************************");
 
-            if (Objects.equals(processNumber, "1")){                          // Listeye müşteri ekleme işlemi yapar.
+            if (Objects.equals(processNumber, "1")){                                                                    // Listeye müşteri ekleme işlemi yapar.
 
                 System.out.println("Enter Customer Name : " );
                 String name = scan.nextLine();
@@ -62,13 +66,13 @@ public class Main {
                 String industry = scan.nextLine();
 
                 Customer customer = new Customer(id,name,industry,LocalDate.now());
-                System.out.println(customer);
+                System.out.println("The customer named" + customer.getFirstName() +  "is registered in the system.");
                 customers.add(customer);
 
 
 
 
-            } else if (Objects.equals(processNumber, "5")) {                        // Müşteri id'si üzerinden müşteri siparişi alma
+            } else if (Objects.equals(processNumber, "5")) {                                                            // Müşteri id'si üzerinden müşteri siparişi alma
 
                 System.out.println("Please enter the id of the customer you want to trade : ");
                 int id = scan.nextInt();
@@ -89,7 +93,10 @@ public class Main {
                 scan.nextLine();
 
                 Order order = new Order(productName,quantity,price, customer,LocalDate.now());
-                Invoice invoice = new Invoice(tradeNumber,price,LocalDate.now(),order);
+                orders.add(order);
+                Invoice invoice = new Invoice(tradeNumber,price + totalAmount,LocalDate.now(),order);
+                invoices.add(invoice);
+
                 tradeNumber += 1;
                 System.out.println("Customer Name : " + order.getCustomer().getFirstName() + " " + order.getProductName() + " "
                         + order.getQuantity() + " " + order.getPrice());
@@ -99,9 +106,9 @@ public class Main {
 
 
 
-            } else if (Objects.equals(processNumber, "10")) {                        //Bütün faturaları listelemek için kullanılır.
-                List<Invoice> invoiceList = invoices;                                    // Fatura Listesi listesi
-                boolean customerFound = false;                                              // Müşteri bulunup bulunmadığını tutan değişken
+            } else if (Objects.equals(processNumber, "10")) {                                                           //Bütün faturaları listelemek için kullanılır.
+                List<Invoice> invoiceList = invoices;                      // Fatura Listesi listesi
+                boolean customerFound = false;                          // Müşteri bulunup bulunmadığını tutan değişken
 
                 for (Invoice c : invoiceList) {
                     if (invoiceList.size()>0) {
@@ -119,14 +126,14 @@ public class Main {
 
 
 
-            } else if (Objects.equals(processNumber, "2")) {         // Bütün müşterileri listeler.
-                if (customers.size() == 0){                             // Listedeki müşteri sayını kontrol edip cevap döner
+            } else if (Objects.equals(processNumber, "2")) {                                                            // Bütün müşterileri listeler.
+                if (customers.size() == 0){                   // Listedeki müşteri sayını kontrol edip cevap döner
                     System.out.println("There is no customer in the list");
                     System.out.println("-----------------------------");
                     System.out.println("Please add a Customer in the list");
                     System.out.println("-----------------------------");
                 }
-                else {                                               // Listedeki müşterilerin bilgilerini döner.
+                else {                                                                                                      // Listedeki müşterilerin bilgilerini döner.
                     customers.forEach(c -> {
                         System.out.println("ID: " + c.getId());
                         System.out.println("Name: " + c.getFirstName());
@@ -140,7 +147,7 @@ public class Main {
 
 
 
-            }else if(Objects.equals(processNumber, "3")){             // Müşteri id'sine göre silme işlemi gerçekleştirilir.
+            }else if(Objects.equals(processNumber, "3")){                                                               // Müşteri id'sine göre silme işlemi gerçekleştirilir.
                 if (customers.size() == 0){
                     System.out.println("There is no customer in the list");
                     System.out.println("-----------------------------");
@@ -166,9 +173,9 @@ public class Main {
 
 
 
-            } else if (Objects.equals(processNumber, "4")) {                // C harfi bulunan müşterileri listeler
-                List<Customer> customerList = customers;                                    // Müşteri listesi
-                boolean customerFound = false;                                              // Müşteri bulunup bulunmadığını tutan değişken
+            } else if (Objects.equals(processNumber, "4")) {                                                          // C harfi bulunan müşterileri listeler
+                List<Customer> customerList = customers;                      // Müşteri listesi
+                boolean customerFound = false;                         // Müşteri bulunup bulunmadığını tutan değişken
 
                 for (Customer c : customerList) {
                     if (c.getFirstName().contains("C") || c.getFirstName().contains("c")) {
@@ -186,7 +193,7 @@ public class Main {
 
 
 
-            } else if (Objects.equals(processNumber, "6")) {         // Haziran ayında kayıt olan müşteri fatura çıktısı
+            } else if (Objects.equals(processNumber, "6")) {                                                            // Haziran ayında kayıt olan müşteri fatura çıktısı
 
                 List<Invoice> invoiceList = invoices;
                 boolean customerFound = false;
@@ -196,19 +203,16 @@ public class Main {
                         customerFound = true;
                     }
                 }if (!customerFound) {
-                    System.out.println("No customer found with the letter 'C' in it.");
+                    System.out.println("No Invoice found in June.");
                 }
 
 
+            } else if (Objects.equals(processNumber, "7")) {                                                            // 1500 üstü faturalar
 
-
-
-            } else if (Objects.equals(processNumber, "7")) {
-                // 1500 üstü faturalar
                 List<Invoice> invoiceList = invoices;
                 boolean customerFound = false;
                 for (Invoice c : invoiceList){
-                    if (c.getDate().getMonthValue() == 6){
+                    if (c.getAmount() > 1000){
                         System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName());
                         customerFound = true;
                     }
@@ -216,10 +220,29 @@ public class Main {
                     System.out.println("No customer found with the letter 'C' in it.");
                 }
 
-            } else if (Objects.equals(processNumber, "8")) {      // 1500 Tl üstü fatura ortalaması
+
+            } else if (Objects.equals(processNumber, "8")) {                                                            // 1500 Tl üstü fatura ortalaması
+                   /* List<Invoice> invoiceList = invoices;
+                    invoiceList.stream().filter(invoice -> invoice.getAmount() > 1500)
+                            .mapToDouble(Invoice::getAmount)
+                            .average()
+                            .orElse(0.0);*/
+                double average = invoices.stream()
+                        .filter(invoice -> invoice.getAmount() > 1500)
+                        .mapToDouble(Invoice::getAmount)
+                        .average()
+                        .orElse(0.0);
+
+                System.out.println(average);
 
 
-            } else if (Objects.equals(processNumber, "9")) {         // Haziran ayında 750 Tl altı firma sektörleri
+            } else if (Objects.equals(processNumber, "9")) {                                                            // Haziran ayında 750 Tl altı firma sektörleri
+                List<Invoice> invoiceList = invoices;
+                invoiceList.stream().filter(invoice -> invoice.getAmount() < 750 && invoice.getDate().getMonthValue()==6)
+                        .mapToDouble(Invoice::getAmount)
+                        .average()
+                        .orElse(0.0);
+
 
 
             } else if (Objects.equals(processNumber, "q")) {

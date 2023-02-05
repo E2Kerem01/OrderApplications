@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ded524ed-e8af-4b8d-8642-c21605ba115e" name="Changes" comment="myFiles">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/patika/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/patika/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/patika/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/patika/Invoice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/patika/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/patika/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/patika/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/patika/Order.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +77,8 @@
       <workItem from="1674945500649" duration="4428000" />
       <workItem from="1675023459119" duration="727000" />
       <workItem from="1675517520259" duration="2524000" />
-      <workItem from="1675546639668" duration="4806000" />
+      <workItem from="1675546639668" duration="5127000" />
+      <workItem from="1675591897580" duration="1359000" />
     </task>
     <task id="LOCAL-00001" summary="myFiles">
       <created>1674950006335</created>
@@ -90,7 +87,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674950006335</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="myFiles">
+      <created>1675553014416</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1675553014416</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -19,13 +19,15 @@ public class Main {
 
         while (SystemControl){                                    // Uygulamayı başlatır ve işlem seçimlerine göre süreci yönetir.
 
-            System.out.println("Patika Fatura Sistemine Hoşgeldiniz....");
-            System.out.println("Lütfen Aşağıdaki Seçeneklerden Birini Seçiniz.");
+            System.out.println("Welcome to the Patika Order System....");
+            System.out.println("Please Choose One Of The Following Options : ");
 
             System.out.println(                                         // İşlem seçim alanı
                     "Create a Customer : 1" + "\n"+
                     "Delete a Customer : 2" + "\n"+
-                    "Customer List : 3");
+                    "Customer List : 3" + "\n" +
+                    "List customers with the letter c : 4");
+
             System.out.print("Enter the Process Number : ");
             String processNumber = scan.nextLine();
 
@@ -47,7 +49,8 @@ public class Main {
                 System.out.println(customer);
                 customers.add(customer);
 
-            } else if (Objects.equals(processNumber, "3")) {
+            }
+            else if (Objects.equals(processNumber, "3")) {
                 if (customers.size() == 0){                             // Listedeki müşteri sayını kontrol edip cevap döner
                     System.out.println("There is no customer in the list");
                     System.out.println("-----------------------------");
@@ -86,7 +89,26 @@ public class Main {
                         System.out.println("Customer nor find the list...");
                     }
                 }
+
+            } else if (Objects.equals(processNumber, "4")) {                // C harfi bulunan müşterileri listeler
+                List<Customer> customerList = customers;                                    // Müşteri listesi
+                boolean customerFound = false;                                              // Müşteri bulunup bulunmadığını tutan değişken
+
+                for (Customer c : customerList) {
+                    if (c.getFirstName().contains("C") || c.getFirstName().contains("c")) {
+                        System.out.println("Customer Name : " + c.getFirstName() + c.getId() + c.getIndustry());
+                        customerFound = true;
+                    }
+                }
+
+                if (!customerFound) {
+                    System.out.println("No customer found with the letter 'C' in it.");
+                }
+
+
             }
+
+
         }
 
 

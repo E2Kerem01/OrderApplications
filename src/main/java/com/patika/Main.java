@@ -4,30 +4,26 @@ package com.patika;
 import java.time.LocalDate;
 import java.util.*;
 
-import static javax.swing.text.html.parser.DTDConstants.ID;
 
 public class Main {
 
-
+    private static Invoice invoice;
 
     public static void main(String[] args) {
 
-     /*   LocalDate a = LocalDate.now();
-        System.out.println(a.getYear());
-        System.out.println(a.getMonthValue());
-        System.out.println(a.getDayOfMonth());*/
-
         Scanner scan = new Scanner(System.in);
+
         List<Customer> customers = new ArrayList<>();
         List<Order> orders = new ArrayList<>();
         List<Invoice> invoices = new ArrayList<>();
+
         Boolean SystemControl = true;
         int tradeNumber = 1;
         int totalAmount = 0;
 
         System.out.println("Welcome to the Patika Order System...." + "\n");
 
-        while (SystemControl){                                    // Uygulamayı başlatır ve işlem seçimlerine göre süreci yönetir.
+        while (SystemControl){                     // Uygulamayı başlatır ve işlem seçimlerine göre süreci yönetir.
 
 
             System.out.println("Please Choose One Of The Following Options : ");
@@ -98,7 +94,8 @@ public class Main {
                 invoices.add(invoice);
 
                 tradeNumber += 1;
-                System.out.println("Customer Name : " + order.getCustomer().getFirstName() + " " + order.getProductName() + " "
+                System.out.println("Customer Name : " + order.getCustomer().getFirstName() + " "
+                        + order.getProductName() + " "
                         + order.getQuantity() + " " + order.getPrice());
                 System.out.println("------------------------");
 
@@ -106,13 +103,14 @@ public class Main {
 
 
 
-            } else if (Objects.equals(processNumber, "10")) {                                                           //Bütün faturaları listelemek için kullanılır.
+            } else if (Objects.equals(processNumber, "100")) {                                                           //Bütün faturaları listelemek için kullanılır.
                 List<Invoice> invoiceList = invoices;                      // Fatura Listesi listesi
                 boolean customerFound = false;                          // Müşteri bulunup bulunmadığını tutan değişken
 
                 for (Invoice c : invoiceList) {
                     if (invoiceList.size()>0) {
-                        System.out.println( c.getOrder().getCustomer().getFirstName() + " " + c.getOrder().getCustomer().getId() + " "
+                        System.out.println( c.getOrder().getCustomer().getFirstName() + " "
+                                + c.getOrder().getCustomer().getId() + " "
                                 + c.getInvoiceNumber() + " " + c.getAmount() + " " + c.getDate());
                         customerFound = true;
                     }
@@ -180,7 +178,8 @@ public class Main {
                 for (Customer c : customerList) {
                     if (c.getFirstName().contains("C") || c.getFirstName().contains("c")) {
 
-                        System.out.println("Customer Name : " + c.getFirstName() + c.getId() + c.getIndustry() + c.getRegistrationDate().getMonthValue());
+                        System.out.println("Customer Name : " + c.getFirstName() + c.getId() + c.getIndustry()
+                                + c.getRegistrationDate().getMonthValue());
                         customerFound = true;
                     }
                 }
@@ -212,8 +211,9 @@ public class Main {
                 List<Invoice> invoiceList = invoices;
                 boolean customerFound = false;
                 for (Invoice c : invoiceList){
-                    if (c.getAmount() > 1000){
-                        System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName());
+                    if (c.getAmount() > 1500){
+                        System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName()
+                                + "Invoince Number : " + c.getInvoiceNumber());
                         customerFound = true;
                     }
                 }if (!customerFound) {
@@ -222,11 +222,6 @@ public class Main {
 
 
             } else if (Objects.equals(processNumber, "8")) {                                                            // 1500 Tl üstü fatura ortalaması
-                   /* List<Invoice> invoiceList = invoices;
-                    invoiceList.stream().filter(invoice -> invoice.getAmount() > 1500)
-                            .mapToDouble(Invoice::getAmount)
-                            .average()
-                            .orElse(0.0);*/
                 double average = invoices.stream()
                         .filter(invoice -> invoice.getAmount() > 1500)
                         .mapToDouble(Invoice::getAmount)
@@ -236,16 +231,42 @@ public class Main {
                 System.out.println(average);
 
 
-            } else if (Objects.equals(processNumber, "9")) {                                                            // Haziran ayında 750 Tl altı firma sektörleri
+            } else if (Objects.equals(processNumber, "9")) {                       //OKEY                               // Sistemdeki 500TL altındaki faturalara sahip müşterilerin isimleri listeleyin
+
                 List<Invoice> invoiceList = invoices;
-                invoiceList.stream().filter(invoice -> invoice.getAmount() < 750 && invoice.getDate().getMonthValue()==6)
-                        .mapToDouble(Invoice::getAmount)
-                        .average()
-                        .orElse(0.0);
+                boolean customerFound = false;
+                for (Invoice c : invoiceList){
+                    if (c.getAmount() < 500){
+                        System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName());
+                        customerFound = true;
+                    }
+                }if (!customerFound) {
+                    System.out.println("No customer found with the letter 'C' in it.");
+                }
 
 
 
-            } else if (Objects.equals(processNumber, "q")) {
+
+
+            }else if (Objects.equals(processNumber, "10")) {                       //OKEY                               Haziran ayını faturalarını ortalaması 750 altı olan firmalarının hangi sektörde olduğunu listeleyen kodu yazın.
+
+                List<Invoice> invoiceList = invoices;
+                boolean customerFound = false;
+                for (Invoice c : invoiceList){
+                    if (c.getAmount() < 750 && c.getOrder().getOrderDate().getMonthValue()==6){
+                        System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName()
+                                + "Sector Name : " + c.getOrder().getCustomer().getIndustry());
+                        customerFound = true;
+                    }
+                }if (!customerFound) {
+                    System.out.println("No customer found with the letter 'C' in it.");
+                }
+
+
+
+
+
+            }else if (Objects.equals(processNumber, "q")) {
 
                 System.out.println("Patika order system is closing....");
 

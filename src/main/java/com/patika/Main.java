@@ -41,14 +41,13 @@ public class Main {
                     "All Invoice : --------------------------------------------------------- 10" + "\n" +
                     "System Off Buton : ---------------------------------------------------- q");
 
-
-
-
+            System.out.println("************************************************************");
 
             System.out.print("Enter the Process Number : ");
             String processNumber = scan.nextLine();
 
             System.out.println("-----------------------------");
+            System.out.println("*****************************");
 
             if (Objects.equals(processNumber, "1")){                          // Listeye müşteri ekleme işlemi yapar.
 

@@ -1,16 +1,19 @@
 package com.patika;
 
 
-import java.util.Date;
+
+
+import java.time.LocalDate;
+
 
 final public class Order {
     private String productName;
     private int quantity;
     private double price;
     private Customer customer;
-    private Date orderDate;
+    private LocalDate orderDate;
 
-    public Order(String productName, int quantity, double price, Customer customer, Date orderDate) {
+    public Order(String productName, int quantity, double price, Customer customer, LocalDate orderDate) {
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;
@@ -50,11 +53,11 @@ final public class Order {
         this.customer = customer;
     }
 
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 }

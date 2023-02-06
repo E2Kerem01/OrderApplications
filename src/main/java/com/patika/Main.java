@@ -1,15 +1,15 @@
 package com.patika;
 
 
+
 import java.time.LocalDate;
 import java.util.*;
 
 
 public class Main {
 
-    private static Invoice invoice;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         Scanner scan = new Scanner(System.in);
 
@@ -17,9 +17,11 @@ public class Main {
         List<Order> orders = new ArrayList<>();
         List<Invoice> invoices = new ArrayList<>();
 
-        Boolean SystemControl = true;
+        boolean SystemControl = true;
         int tradeNumber = 1;
         int totalAmount = 0;
+        int time = 3000;
+
 
         System.out.println("Welcome to the Patika Order System...." + "\n");
 
@@ -55,6 +57,7 @@ public class Main {
                     System.out.println("-----------------------------");
                     System.out.println("Please add a Customer in the list");
                     System.out.println("-----------------------------");
+                    Thread.sleep(time);
                 }
                 else {                                                                                                     // Listedeki müşterilerin bilgilerini döner.
                     customers.forEach(c -> {
@@ -63,6 +66,11 @@ public class Main {
                         System.out.println("Registration Date: " + c.getRegistrationDate());
                         System.out.println("Industry: " + c.getIndustry());
                         System.out.println("-----------------------------");
+                        try {
+                            Thread.sleep(time);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     });
                 }
             }
@@ -75,13 +83,25 @@ public class Main {
                 System.out.println("Enter Customer ID : " );
                 int id = scan.nextInt();
                 scan.nextLine();
-                System.out.println("Enter Customer Industry : " );
 
+                System.out.println("Enter Customer Industry : " );
                 String industry = scan.nextLine();
 
-                Customer customer = new Customer(id,name,industry,LocalDate.now());
-                System.out.println("The customer named" + customer.getFirstName() +  "is registered in the system.");
-                customers.add(customer);
+                 Customer customerId = customers.stream().filter(m -> m.getId()==id)
+                         .findFirst()
+                         .orElse(null);
+
+                 if (customerId == null){
+                     Customer customer = new Customer(id,name,industry,LocalDate.now());
+                     System.out.println("The customer named " + customer.getFirstName() +  " is registered in the system.");
+                     customers.add(customer);
+                     Thread.sleep(time);
+                 }else {
+                     System.out.println("There is a customer with this id number, please try again.");
+                     Thread.sleep(time);
+                 }
+
+
             }
 
             else if (Objects.equals(processNumber, "3")) {                                                             // C harfi bulunan müşterileri listeler
@@ -89,13 +109,16 @@ public class Main {
 
                  for (Customer c : customers) {
                      if (c.getFirstName().contains("C") || c.getFirstName().contains("c")) {
-                         System.out.println("Customer Name : " + c.getFirstName() + c.getId() + c.getIndustry()
-                                 + c.getRegistrationDate().getMonthValue());
+                         System.out.println("Customer Name : " + c.getFirstName() +"\n"+ " Customer ID: " + c.getId() +"\n"+ " Customer Industry: " + c.getIndustry()
+                                +"\n"+ "Registration Date: "+ c.getRegistrationDate());
+                         System.out.println("----------------------------------");
+                         Thread.sleep(time);
                          customerFound = true;
                      }
                  }
                  if (!customerFound) {
                      System.out.println("No customer found with the letter 'C' in it.");
+                     Thread.sleep(time);
                  }
             }
 
@@ -109,13 +132,13 @@ public class Main {
                         .findFirst()
                         .orElse(null);
 
-                System.out.println("Product Name : ");
+                System.out.println("Product Name : " );
                 String productName = scan.nextLine();
 
-                System.out.println("Product Quantity : ");
+                System.out.println("Product Quantity : " );
                 int quantity = scan.nextInt();
 
-                System.out.println("Product Price : ");
+                System.out.println("Product Price : " );
                 int price = scan.nextInt();
                 scan.nextLine();
 
@@ -125,9 +148,10 @@ public class Main {
                 invoices.add(invoice);
 
                 tradeNumber += 1;
-                System.out.println("Customer Name : " + order.getCustomer().getFirstName() + " "
-                        + order.getProductName() + " "
-                        + order.getQuantity() + " " + order.getPrice());
+                System.out.println("Customer Name : " + order.getCustomer().getFirstName() +"\n"+ "Product Name : "
+                        + order.getProductName() +"\n"+ "Number of Product"
+                        + order.getQuantity() +"\n"+ "Total bill : " + invoice.getAmount());
+                Thread.sleep(time);
                 System.out.println("------------------------");
             }
 
@@ -135,9 +159,8 @@ public class Main {
 
                  boolean customerFound = false;
                  for (Invoice c : invoices){
-                     if (c.getDate().getMonthValue() == 6){
-                         System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName());
-                         customerFound = true;
+                     if (c.getOrder().getCustomer().getRegistrationDate().getMonthValue()==6){
+                         customerFound = isCustomersInvoince(c);
                      }
                  }if (!customerFound) {
                      System.out.println("No Invoice found in June.");
@@ -147,18 +170,13 @@ public class Main {
              else if (Objects.equals(processNumber, "6")) {                                                           //Bütün faturaları listelemek için kullanılır.
 
                 boolean customerFound = false;                          // Müşteri bulunup bulunmadığını tutan değişken
-
                 for (Invoice c : invoices) {
-                    if (invoices.size()>0) {
-                        System.out.println( c.getOrder().getCustomer().getFirstName() + " "
-                                + c.getOrder().getCustomer().getId() + " "
-                                + c.getInvoiceNumber() + " " + c.getAmount() + " " + c.getDate());
-                        customerFound = true;
-                    }
+                    customerFound = isCustomersInvoince(c);
                 }
 
                 if (!customerFound) {
                     System.out.println("No customer found ...");
+                    Thread.sleep(time);
                 }
             }
 
@@ -170,9 +188,10 @@ public class Main {
                          System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName()
                                  + "Invoince Number : " + c.getInvoiceNumber());
                          customerFound = true;
+                         Thread.sleep(time);
                      }
                  }if (!customerFound) {
-                     System.out.println("No customer found with the letter 'C' in it.");
+                     System.out.println("There is no invoice over 1500 TL.");
                  }
              }
 
@@ -184,18 +203,24 @@ public class Main {
                          .orElse(0.0);
 
                  System.out.println(average);
+                 Thread.sleep(time);
+
+                 if (average==0){
+                     System.out.println("Since there is no invoice over 1500 TL, average results cannot be obtained.");
+                 }
              }
 
-             else if (Objects.equals(processNumber, "9")) {                       //OKEY                               // Sistemdeki 500TL altındaki faturalara sahip müşterilerin isimleri listeleyin
+             else if (Objects.equals(processNumber, "9")) {                                                            // Sistemdeki 500TL altındaki faturalara sahip müşterilerin isimleri listeleyin
 
                  boolean customerFound = false;
                  for (Invoice c : invoices){
                      if (c.getAmount() < 500){
-                         System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName());
+                         System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName() +"\n");
                          customerFound = true;
+                         Thread.sleep(time);
                      }
                  }if (!customerFound) {
-                     System.out.println("No customer found with the letter 'C' in it.");
+                     System.out.println("There is no invoice over 500 TL.");
                  }
              }
 
@@ -210,19 +235,21 @@ public class Main {
                          customerFound = true;
                      }
                  }if (!customerFound) {
-                     System.out.println("No customer found with the letter 'C' in it.");
+                     System.out.println("There is no invoice over 750 TL.");
                  }
              }
 
              else if(Objects.equals(processNumber, "11")){                                                               // Müşteri id'sine göre silme işlemi gerçekleştirilir.
                 if (customers.size() == 0){
+                    System.out.println("" +"\n"+"\n"+"\n"+"\n");
+                    System.out.println("-----------------------------");
                     System.out.println("There is no customer in the list");
                     System.out.println("-----------------------------");
                     System.out.println("Please add a Customer in the list");
-                    System.out.println("-----------------------------");
+                    System.out.println("-----------------------------" +"\n"+"\n"+"\n"+"\n");
                 }
                 else {
-                    System.out.println("Please enter the id number of the customer to be deleted : ");
+                    System.out.println("Please enter the id number of the customer to be deleted : " );
                     int id = scan.nextInt();
                     scan.nextLine();
                     Customer customer = customers.stream().filter(m -> m.getId()==id)
@@ -232,6 +259,7 @@ public class Main {
                     if (customer != null){
                         customers.remove(customer);
                         System.out.println("Customer detele process is success...");
+                        Thread.sleep(time);
                     }else {
                         System.out.println("Customer nor find the list...");
                     }
@@ -239,11 +267,24 @@ public class Main {
             }
 
              else if (Objects.equals(processNumber, "q")) {                                                             // Sistemden çıkış yapılır.
-
-                System.out.println("Patika order system is closing....");
+                 SystemControl = false;
+                 System.out.println("Patika order system is closing....");
+                 Thread.sleep(time);
 
             }
         }
+    }
+
+    private static boolean isCustomersInvoince(Invoice c) throws InterruptedException {
+        boolean customerFound;
+        System.out.println( "Customer Name: "+c.getOrder().getCustomer().getFirstName() +"\n"+ "Customer ID: "
+                + c.getOrder().getCustomer().getId() +"\n"+ "Invoince Number: "
+                + c.getInvoiceNumber() +"\n"+ "Amount: " + c.getAmount() +"\n"
+                +"Product Name: " +c.getOrder().getProductName() +"\n"+ "Invoince Date: " + c.getDate());
+        System.out.println("-----------------------------" +"\n"+"\n"+"\n"+"\n");
+        Thread.sleep(3000);
+        customerFound = true;
+        return customerFound;
     }
 }
 

@@ -34,6 +34,17 @@ public class Invoice {
         return order;
     }
 
+    private static boolean isCustomersInvoince(Invoice c) throws InterruptedException {
+        boolean customerFound;
+        System.out.println( "Customer Name: "+c.getOrder().getCustomer().getFirstName() +"\n"+ "Customer ID: "
+                + c.getOrder().getCustomer().getId() +"\n"+ "Invoince Number: "
+                + c.getInvoiceNumber() +"\n"+ "Amount: " + c.getAmount() +"\n"
+                +"Product Name: " +c.getOrder().getProductName() +"\n"+ "Invoince Date: " + c.getDate());
+        System.out.println("-----------------------------" +"\n"+"\n"+"\n"+"\n");
+        Thread.sleep(5000);
+        customerFound = true;
+        return customerFound;
+    }
 
 
     /*public void getAvarageAmount(List<Invoice> invoices){

@@ -23,23 +23,24 @@ public class Main {
 
         System.out.println("Welcome to the Patika Order System...." + "\n");
 
-        while (SystemControl){                     // Uygulamayı başlatır ve işlem seçimlerine göre süreci yönetir.
+        while (SystemControl){                                                                                              // Uygulamayı başlatır ve işlem seçimlerine göre süreci yönetir.
 
 
             System.out.println("Please Choose One Of The Following Options : ");
 
             System.out.println(                                    // İşlem seçim alanı
-                    "Create a Customer : --------------------------------------------------- 1" + "\n"+
-                    "Delete a Customer : --------------------------------------------------- 2" + "\n"+
-                    "Customer List : ------------------------------------------------------- 3" + "\n" +
-                    "List customers with the letter c : ------------------------------------ 4" + "\n" +
-                    "Create an order : ----------------------------------------------------- 5" + "\n" +
-                    "June Invoice : -------------------------------------------------------- 6" + "\n" +
-                    "Invoices over 1500 TL : ----------------------------------------------- 7" + "\n" +
-                    "Names of customers with invoices under 500TL in the system : ---------- 8" + "\n" +
-                    "Sectors of companies with an average invoice of less than 750 in June : 9" + "\n" +
-                    "All Invoice : --------------------------------------------------------- 10" + "\n" +
-                    "System Off Buton : ---------------------------------------------------- q");
+                            "Customer List : ------------------------------------------------------- 1" + "\n"+
+                            "Create a Customer : --------------------------------------------------- 2" + "\n"+
+                            "List customers with the letter c : ------------------------------------ 3" + "\n" +
+                            "Create an order : ----------------------------------------------------- 4" + "\n" +
+                            "June Invoice : -------------------------------------------------------- 5" + "\n" +
+                            "All Invoice : --------------------------------------------------------- 6" + "\n" +
+                            "Invoices over 1500 TL : ----------------------------------------------- 7" + "\n" +
+                            "Average Invoices over 1500 TL : --------------------------------------- 8" + "\n" +
+                            "Names of customers with invoices under 500TL in the system : ---------- 9" + "\n" +
+                            "Sectors of companies with an average invoice of less than 750 in June : 10" + "\n" +
+                            "Delete a Customer : --------------------------------------------------: 11" + "\n" +
+                            "System Off Buton : ---------------------------------------------------- q");
 
             System.out.println("************************************************************");
             System.out.print("Enter the Process Number : ");
@@ -83,11 +84,10 @@ public class Main {
                 customers.add(customer);
             }
 
-            else if (Objects.equals(processNumber, "3")) {                                                          // C harfi bulunan müşterileri listeler
-                 List<Customer> customerList = customers;               // Müşteri listesi
+            else if (Objects.equals(processNumber, "3")) {                                                             // C harfi bulunan müşterileri listeler
                  boolean customerFound = false;                         // Müşteri bulunup bulunmadığını tutan değişken
 
-                 for (Customer c : customerList) {
+                 for (Customer c : customers) {
                      if (c.getFirstName().contains("C") || c.getFirstName().contains("c")) {
                          System.out.println("Customer Name : " + c.getFirstName() + c.getId() + c.getIndustry()
                                  + c.getRegistrationDate().getMonthValue());
@@ -131,11 +131,10 @@ public class Main {
                 System.out.println("------------------------");
             }
 
-            else if (Objects.equals(processNumber, "5")) {                                                            // Haziran ayında kayıt olan müşteri fatura çıktısı
+            else if (Objects.equals(processNumber, "5")) {                                                            // Haziran ayında kayıt olan müşterilerin fatura çıktısı
 
-                 List<Invoice> invoiceList = invoices;
                  boolean customerFound = false;
-                 for (Invoice c : invoiceList){
+                 for (Invoice c : invoices){
                      if (c.getDate().getMonthValue() == 6){
                          System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName());
                          customerFound = true;
@@ -147,11 +146,10 @@ public class Main {
 
              else if (Objects.equals(processNumber, "6")) {                                                           //Bütün faturaları listelemek için kullanılır.
 
-                List<Invoice> invoiceList = invoices;                   // Fatura Listesi listesi
                 boolean customerFound = false;                          // Müşteri bulunup bulunmadığını tutan değişken
 
-                for (Invoice c : invoiceList) {
-                    if (invoiceList.size()>0) {
+                for (Invoice c : invoices) {
+                    if (invoices.size()>0) {
                         System.out.println( c.getOrder().getCustomer().getFirstName() + " "
                                 + c.getOrder().getCustomer().getId() + " "
                                 + c.getInvoiceNumber() + " " + c.getAmount() + " " + c.getDate());
@@ -166,9 +164,8 @@ public class Main {
 
              else if (Objects.equals(processNumber, "7")) {                                                            // 1500 üstü faturalar listelenir.
 
-                 List<Invoice> invoiceList = invoices;
                  boolean customerFound = false;
-                 for (Invoice c : invoiceList){
+                 for (Invoice c : invoices){
                      if (c.getAmount() > 1500){
                          System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName()
                                  + "Invoince Number : " + c.getInvoiceNumber());
@@ -191,9 +188,8 @@ public class Main {
 
              else if (Objects.equals(processNumber, "9")) {                       //OKEY                               // Sistemdeki 500TL altındaki faturalara sahip müşterilerin isimleri listeleyin
 
-                 List<Invoice> invoiceList = invoices;
                  boolean customerFound = false;
-                 for (Invoice c : invoiceList){
+                 for (Invoice c : invoices){
                      if (c.getAmount() < 500){
                          System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName());
                          customerFound = true;
@@ -205,10 +201,9 @@ public class Main {
 
              else if (Objects.equals(processNumber, "10")) {                                                          // Haziran ayını faturalarını ortalaması 750 altı olan firmalarının hangi sektörde olduğunu listeleyen kodu yazın.
 
-                 List<Invoice> invoiceList = invoices;
                  boolean customerFound = false;
 
-                 for (Invoice c : invoiceList){
+                 for (Invoice c : invoices){
                      if (c.getAmount() < 750 && c.getOrder().getOrderDate().getMonthValue()==6){
                          System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName()
                                  + "Sector Name : " + c.getOrder().getCustomer().getIndustry());

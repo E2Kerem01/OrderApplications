@@ -9,7 +9,7 @@ public class Invoice {
     private final int amount;
     private final LocalDate date;
     private final Order order;
-    private Customer customer;
+
 
     public Invoice(int invoiceNumber, int amount, LocalDate date, Order order) {
         this.invoiceNumber = invoiceNumber;
@@ -33,6 +33,8 @@ public class Invoice {
     public Order getOrder() {
         return order;
     }
+
+
 
     /*public void getAvarageAmount(List<Invoice> invoices){
         double average = invoices.stream()

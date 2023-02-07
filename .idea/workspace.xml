@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ded524ed-e8af-4b8d-8642-c21605ba115e" name="Changes" comment="myFilesv1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/patika/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/patika/Invoice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/patika/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/patika/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +80,7 @@
       <workItem from="1675546639668" duration="5127000" />
       <workItem from="1675591897580" duration="7612000" />
       <workItem from="1675622768594" duration="9012000" />
-      <workItem from="1675708248617" duration="8551000" />
+      <workItem from="1675708248617" duration="11874000" />
     </task>
     <task id="LOCAL-00001" summary="myFiles">
       <created>1674950006335</created>
@@ -146,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675709645073</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="myFilesv1">
+      <created>1675724520856</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1675724520856</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

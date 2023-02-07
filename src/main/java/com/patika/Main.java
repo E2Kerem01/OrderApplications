@@ -20,7 +20,7 @@ public class Main {
         boolean SystemControl = true;
         int tradeNumber = 1;
         int totalAmount = 0;
-        int time = 3000;
+        int time = 1000;
 
 
         System.out.println("Welcome to the Patika Order System...." + "\n");
@@ -77,14 +77,14 @@ public class Main {
 
             else if (Objects.equals(processNumber, "2")){                                                                // Listeye yeni müşteri ekleme işlemi yapar.
 
-                System.out.println("Enter Customer Name : " );
+                System.out.print("Enter Customer Name : " );
                 String name = scan.nextLine();
 
-                System.out.println("Enter Customer ID : " );
+                System.out.print("Enter Customer ID : " );
                 int id = scan.nextInt();
                 scan.nextLine();
 
-                System.out.println("Enter Customer Industry : " );
+                System.out.print("Enter Customer Industry : " );
                 String industry = scan.nextLine();
 
                  Customer customerId = customers.stream().filter(m -> m.getId()==id)
@@ -109,7 +109,7 @@ public class Main {
 
                  for (Customer c : customers) {
                      if (c.getFirstName().contains("C") || c.getFirstName().contains("c")) {
-                         System.out.println("Customer Name : " + c.getFirstName() +"\n"+ " Customer ID: " + c.getId() +"\n"+ " Customer Industry: " + c.getIndustry()
+                         System.out.println("Customer Name : " + c.getFirstName() +"\n"+ "Customer ID: " + c.getId() +"\n"+ "Customer Industry: " + c.getIndustry()
                                 +"\n"+ "Registration Date: "+ c.getRegistrationDate());
                          System.out.println("----------------------------------");
                          Thread.sleep(time);
@@ -124,7 +124,7 @@ public class Main {
 
             else if (Objects.equals(processNumber, "4")) {                                                            // Müşteri id'si üzerinden müşteri siparişi alma
 
-                System.out.println("Please enter the id of the customer you want to trade : ");
+                System.out.print("Please enter the id of the customer you want to trade : ");
                 int id = scan.nextInt();
 
                 scan.nextLine();
@@ -132,27 +132,35 @@ public class Main {
                         .findFirst()
                         .orElse(null);
 
-                System.out.println("Product Name : " );
-                String productName = scan.nextLine();
+                if (customer==null){
+                    System.out.println("------------------------");
+                    System.out.println("There are no customers registered with this Id.");
+                    Thread.sleep(time);
 
-                System.out.println("Product Quantity : " );
-                int quantity = scan.nextInt();
+                }else {
+                    System.out.print("Product Name : " );
+                    String productName = scan.nextLine();
 
-                System.out.println("Product Price : " );
-                int price = scan.nextInt();
-                scan.nextLine();
+                    System.out.print("Product Quantity : " );
+                    int quantity = scan.nextInt();
 
-                Order order = new Order(productName,quantity,price, customer,LocalDate.now());
-                orders.add(order);
-                Invoice invoice = new Invoice(tradeNumber,(quantity*price) + totalAmount,LocalDate.now(),order);
-                invoices.add(invoice);
+                    System.out.print("Product Price : " );
+                    int price = scan.nextInt();
+                    scan.nextLine();
+                    System.out.println("------------------------");
 
-                tradeNumber += 1;
-                System.out.println("Customer Name : " + order.getCustomer().getFirstName() +"\n"+ "Product Name : "
-                        + order.getProductName() +"\n"+ "Number of Product"
-                        + order.getQuantity() +"\n"+ "Total bill : " + invoice.getAmount());
-                Thread.sleep(time);
-                System.out.println("------------------------");
+                    Order order = new Order(productName,quantity,price, customer,LocalDate.now());
+                    orders.add(order);
+                    Invoice invoice = new Invoice(tradeNumber,(quantity*price) + totalAmount,LocalDate.now(),order);
+                    invoices.add(invoice);
+
+                    tradeNumber += 1;
+                    System.out.println("Customer Name : " + order.getCustomer().getFirstName() +"\n"+ "Product Name : "
+                            + order.getProductName() +"\n"+ "Number of Product : "
+                            + order.getQuantity() +"\n"+ "Total bill : " + invoice.getAmount());
+                    Thread.sleep(time);
+                    System.out.println("------------------------");
+                }
             }
 
             else if (Objects.equals(processNumber, "5")) {                                                            // Haziran ayında kayıt olan müşterilerin fatura çıktısı
@@ -175,7 +183,7 @@ public class Main {
                 }
 
                 if (!customerFound) {
-                    System.out.println("No customer found ...");
+                    System.out.println("No Invoice found ...");
                     Thread.sleep(time);
                 }
             }
@@ -186,12 +194,12 @@ public class Main {
                  for (Invoice c : invoices){
                      if (c.getAmount() > 1500){
                          System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName()
-                                 + "Invoince Number : " + c.getInvoiceNumber());
+                                 +"\n"+ "Invoice Number : " + c.getInvoiceNumber());
                          customerFound = true;
                          Thread.sleep(time);
                      }
                  }if (!customerFound) {
-                     System.out.println("There is no invoice over 1500 TL.");
+                     System.out.println("There is no invoice over 1500 TL." + "\n");
                  }
              }
 
@@ -206,7 +214,7 @@ public class Main {
                  Thread.sleep(time);
 
                  if (average==0){
-                     System.out.println("Since there is no invoice over 1500 TL, average results cannot be obtained.");
+                     System.out.println("Since there is no invoice over 1500 TL, average results cannot be obtained."+ "\n");
                  }
              }
 
@@ -249,15 +257,26 @@ public class Main {
                     System.out.println("-----------------------------" +"\n"+"\n"+"\n"+"\n");
                 }
                 else {
-                    System.out.println("Please enter the id number of the customer to be deleted : " );
+                    System.out.print("Please enter the id number of the customer to be deleted : " );
                     int id = scan.nextInt();
                     scan.nextLine();
+
                     Customer customer = customers.stream().filter(m -> m.getId()==id)
+                            .findFirst()
+                            .orElse(null);
+
+                    Order order = orders.stream().filter(n->n.getCustomer().getId()==id)
+                            .findFirst()
+                            .orElse(null);
+
+                    Invoice invoice = invoices.stream().filter(l -> l.getOrder().getCustomer().getId()==id)
                             .findFirst()
                             .orElse(null);
 
                     if (customer != null){
                         customers.remove(customer);
+                        orders.remove(order);
+                        invoices.remove(invoice);
                         System.out.println("Customer detele process is success...");
                         Thread.sleep(time);
                     }else {
@@ -281,8 +300,8 @@ public class Main {
                 + c.getOrder().getCustomer().getId() +"\n"+ "Invoince Number: "
                 + c.getInvoiceNumber() +"\n"+ "Amount: " + c.getAmount() +"\n"
                 +"Product Name: " +c.getOrder().getProductName() +"\n"+ "Invoince Date: " + c.getDate());
-        System.out.println("-----------------------------" +"\n"+"\n"+"\n"+"\n");
-        Thread.sleep(3000);
+        System.out.println("-----------------------------" +"\n");
+        Thread.sleep(1000);
         customerFound = true;
         return customerFound;
     }

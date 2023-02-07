@@ -93,7 +93,7 @@ public class Main {
 
                  if (customerId == null){
                      Customer customer = new Customer(id,name,industry,LocalDate.now());
-                     System.out.println("The customer named " + customer.getFirstName() +  " is registered in the system.");
+                     System.out.println("The customer named " + customer.getFirstName() + " is registered in the system.");
                      customers.add(customer);
                      Thread.sleep(time);
                  }else {
@@ -109,7 +109,8 @@ public class Main {
 
                  for (Customer c : customers) {
                      if (c.getFirstName().contains("C") || c.getFirstName().contains("c")) {
-                         System.out.println("Customer Name : " + c.getFirstName() +"\n"+ "Customer ID: " + c.getId() +"\n"+ "Customer Industry: " + c.getIndustry()
+                         System.out.println("Customer Name : " + c.getFirstName() +"\n"+ "Customer ID: "
+                                 + c.getId() +"\n"+ "Customer Industry: " + c.getIndustry()
                                 +"\n"+ "Registration Date: "+ c.getRegistrationDate());
                          System.out.println("----------------------------------");
                          Thread.sleep(time);
@@ -132,7 +133,7 @@ public class Main {
                         .findFirst()
                         .orElse(null);
 
-                if (customer==null){
+                if (customer==null){            // id kontrolü
                     System.out.println("------------------------");
                     System.out.println("There are no customers registered with this Id.");
                     Thread.sleep(time);
@@ -149,9 +150,9 @@ public class Main {
                     scan.nextLine();
                     System.out.println("------------------------");
 
-                    Order order = new Order(productName,quantity,price, customer,LocalDate.now());
+                    Order order = new Order(productName,quantity,price, customer,LocalDate.now()); // Sipariş alma
                     orders.add(order);
-                    Invoice invoice = new Invoice(tradeNumber,(quantity*price) + totalAmount,LocalDate.now(),order);
+                    Invoice invoice = new Invoice(tradeNumber,(quantity*price) + totalAmount,LocalDate.now(),order);  // Fatura kesme işlemi
                     invoices.add(invoice);
 
                     tradeNumber += 1;
@@ -232,20 +233,26 @@ public class Main {
                  }
              }
 
-             else if (Objects.equals(processNumber, "10")) {                                                          // Haziran ayını faturalarını ortalaması 750 altı olan firmalarının hangi sektörde olduğunu listeleyen kodu yazın.
+             else if (Objects.equals(processNumber, "10")) {
+                 double average = invoices.stream()
+                         .filter(invoice -> invoice.getAmount() < 750 && invoice.getDate().getMonthValue()==6)
+                         .mapToDouble(Invoice::getAmount)
+                         .average()
+                         .orElse(0.0);
 
-                 boolean customerFound = false;
+                 System.out.println(average);
+                 Thread.sleep(time);
 
-                 for (Invoice c : invoices){
-                     if (c.getAmount() < 750 && c.getOrder().getOrderDate().getMonthValue()==6){
-                         System.out.println("Customer Name : " + c.getOrder().getCustomer().getFirstName()
-                                 + "Sector Name : " + c.getOrder().getCustomer().getIndustry());
-                         customerFound = true;
-                     }
-                 }if (!customerFound) {
-                     System.out.println("There is no invoice over 750 TL.");
+                 if (average == 0) {
+                     System.out.println("Since there is no invoice under 750 TL in June, average results cannot be obtained." + "\n");
+                 } else {
+                     System.out.println("Sectors of companies with average invoice under 750 TL in June: ");
+                     invoices.stream()
+                             .filter(invoice -> invoice.getAmount() < 750 && invoice.getDate().getMonthValue()==6)
+                             .forEach(invoice -> System.out.println(invoice.getOrder().getCustomer().getIndustry()));
                  }
              }
+
 
              else if(Objects.equals(processNumber, "11")){                                                               // Müşteri id'sine göre silme işlemi gerçekleştirilir.
                 if (customers.size() == 0){
